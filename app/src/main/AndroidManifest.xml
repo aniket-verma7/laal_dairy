@@ -10,8 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LaalDairy">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".signIn_signUp.VerifyOTP"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="true" />
+        <activity
+            android:name=".signIn_signUp.SignIn"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
