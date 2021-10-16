@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ImageSliderAdapter extends SliderViewAdapter<ImageSliderAdapter.Holder> {
     private List<Integer> imageData;
-    private int scale = 100;
+    private int scale = 50;
 
     public ImageSliderAdapter() {
         this.imageData = new ArrayList<>();
@@ -32,7 +32,7 @@ public class ImageSliderAdapter extends SliderViewAdapter<ImageSliderAdapter.Hol
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         if(position%2==0) holder.imageView.setImageResource(imageData.get(0));
-        else holder.imageView.setImageResource(imageData.get(1));
+        else if(position%2==1) holder.imageView.setImageResource(imageData.get(1));
     }
 
     @Override

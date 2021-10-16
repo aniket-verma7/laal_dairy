@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Laal Dairy</string>
     <string name="signIn_signUp">Sign In | Sign Up</string>
-    <string name="generate_otp">Generate OTP</string>
+    <string name="generate_otp">Get Started</string>
     <string name="text_continue">Continue</string>
+    <string name="user_name">Name</string>
+    <string name="email">Email</string>
+    <string name="number">Phone Number</string>
+    <string name="login_text">Already have an account? <b>Log In</b></string>
+    <string name="sign_up_text">Still have no account? <b>Register</b></string>
+    <string name="welcomeMessage">Thanks for joining! \n Laal Diary</string>
 </resources>

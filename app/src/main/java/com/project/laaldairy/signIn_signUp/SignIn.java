@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +16,8 @@ import com.google.android.material.slider.Slider;
 import com.hbb20.CountryCodePicker;
 import com.project.laaldairy.R;
 import com.project.laaldairy.adapter.ImageSliderAdapter;
+import com.project.laaldairy.constant.Keys;
+import com.project.laaldairy.dto.UserData;
 import com.smarteist.autoimageslider.SliderView;
 
 import org.w3c.dom.Text;
@@ -20,8 +26,11 @@ public class SignIn extends AppCompatActivity {
 
     private SliderView sliderView;
     private CountryCodePicker codePicker;
-    private EditText userNumber;
-    private TextView getOTP,codeIndicator;
+    private EditText userName,userNumber,userEmail;
+    private TextView getOTP,codeIndicator,loginLink;
+    private View newUserLayout;
+    private LinearLayout nameLayout,emailLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +43,19 @@ public class SignIn extends AppCompatActivity {
 
     //finding all id here...
     private void init(){
-        codePicker = findViewById(R.id.codePicker);
-        userNumber = findViewById(R.id.userNumber);
-        getOTP = findViewById(R.id.getOTP);
-        codeIndicator = findViewById(R.id.codeIndicator);
+        newUserLayout = findViewById(R.id.new_user_layout);
+
+        nameLayout = newUserLayout.findViewById(R.id.nameParent);
+        emailLayout = newUserLayout.findViewById(R.id.emailParent);
+
+        codePicker = newUserLayout.findViewById(R.id.codePicker);
+        userName = newUserLayout.findViewById(R.id.userName);
+        userNumber = newUserLayout.findViewById(R.id.userNumber);
+        userEmail = newUserLayout.findViewById(R.id.userEmail);
+        getOTP = newUserLayout.findViewById(R.id.getOTP);
+        codeIndicator = newUserLayout.findViewById(R.id.codeIndicator);
+        loginLink = newUserLayout.findViewById(R.id.loginLink);
+
         sliderView = findViewById(R.id.imageSlider);
     }
 
@@ -48,6 +66,7 @@ public class SignIn extends AppCompatActivity {
         sliderView.startAutoCycle();
     }
 
+    //applying click callback to views
     private void applyClickListener() {
         codePicker.setOnCountryChangeListener(()->{
             codeIndicator.setText("+"+codePicker.getFullNumber());
@@ -59,8 +78,29 @@ public class SignIn extends AppCompatActivity {
                 userNumber.setError("Invalid Number");
             }else{
                 Intent intent = new Intent(this,VerifyOTP.class);
-                intent.putExtra("mob",codeIndicator.getText().toString()+" "+number);
+                UserData data = new UserData();
+                if(nameLayout.getVisibility() == View.VISIBLE){
+                   data.setName(userName.getText().toString());
+                   data.setEmail(userEmail.getText().toString());
+                   intent.putExtra(Keys.NEW_USER,true);
+                }
+                data.setPhone(codeIndicator.getText().toString()+number);
+
+                intent.putExtra(Keys.USER_DATA,data);
                 startActivity(intent);
+            }
+        });
+
+        loginLink.setOnClickListener(changeView->{
+
+            if(nameLayout.getVisibility() == View.VISIBLE) {
+                nameLayout.setVisibility(View.GONE);
+                emailLayout.setVisibility(View.GONE);
+                loginLink.setText(R.string.sign_up_text);
+            }else {
+                nameLayout.setVisibility(View.VISIBLE);
+                emailLayout.setVisibility(View.VISIBLE);
+                loginLink.setText(R.string.login_text);
             }
         });
     }

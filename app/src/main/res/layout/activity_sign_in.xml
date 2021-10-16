@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_alignParentBottom="true"
+    android:background="@color/background_color"
+    android:orientation="vertical"
     tools:context=".signIn_signUp.SignIn">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
             android:layout_weight="1"
-            android:background="@drawable/curve_drawable">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <com.smarteist.autoimageslider.SliderView
+                android:layout_weight="1"
                 android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="50dp"
+                android:layout_height="match_parent"
+                android:padding="20dp"
                 app:sliderAnimationDuration="600"
                 app:sliderAutoCycleDirection="right"
                 app:sliderAutoCycleEnabled="true"
@@ -41,80 +45,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@drawable/curve_drawable">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:text="@string/signIn_signUp"
-                android:textColor="@color/text_color"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+            <include android:id="@+id/new_user_layout"
+                layout="@layout/new_user_layout"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <com.hbb20.CountryCodePicker
-                    android:id="@+id/codePicker"
-                    android:layout_width="150dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:gravity="center"
-                    app:ccp_showFlag="true"
-                    app:ccp_showNameCode="false"
-                    app:ccp_showPhoneCode="false" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_background"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/codeIndicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="+91"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/userNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:inputType="numberDecimal"
-                        android:maxLength="10"
-                        android:padding="10dp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/getOTP"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/button_background"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:paddingHorizontal="30dp"
-                android:paddingVertical="5dp"
-                android:text="@string/generate_otp"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>

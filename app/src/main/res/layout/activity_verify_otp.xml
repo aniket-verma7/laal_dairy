@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_color"
     tools:context=".signIn_signUp.SignIn">
-
 
     <TextView
         android:id="@+id/placeText"
@@ -45,32 +45,31 @@
 
 
     <com.goodiebag.pinview.Pinview
-        android:id="@+id/pinview"
-        app:textSize="@dimen/pin_view_text"
-        android:layout_marginTop="50dp"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/numberIndicator"
-        app:pinBackground="@drawable/pin_selector"
+        android:id="@+id/pinView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:pinWidth="50dp"
-        app:pinHeight="50dp"
-        app:pinLength="5"
-        app:hint="X"
+        android:layout_below="@id/numberIndicator"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
         app:cursorVisible="false"
+        app:hint="X"
         app:inputType="number"
         app:password="false"
+        app:pinBackground="@drawable/pin_selector"
+        app:pinHeight="50dp"
+        app:pinLength="5"
+        app:pinWidth="50dp"
+        app:textSize="@dimen/pin_view_text"
         tools:ignore="SpUsage" />
 
-
     <TextView
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="50dp"
         android:id="@+id/verifyNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/poppins"
         android:gravity="center"
