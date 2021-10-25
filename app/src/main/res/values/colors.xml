@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background_color">#FFE2E6</color>
+    <color name="pin_stroke">#F8C6CD</color>
     <color name="text_color">#FF0000 </color>
     <color name="button_color">#CC2634 </color>
     <color name="input_text_color">#313F51 </color>

@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,11 +35,12 @@ public class VerifyOTP extends AppCompatActivity {
 
     //finding all id here...
     private void init(){
+        getWindow().setNavigationBarColor(getResources().getColor(R.color.background_color));
         data = (UserData) getIntent().getSerializableExtra(Keys.USER_DATA);
 
         numberIndicator = findViewById(R.id.numberIndicator);
         verifyNumber = findViewById(R.id.verifyNumber);
-        otp = findViewById(R.id.pinView);
+//        otp = findViewById(R.id.pinView);
 
         numberIndicator.setText(data.getPhone());
         newUser = getIntent().getBooleanExtra(Keys.NEW_USER,false);
@@ -52,7 +56,7 @@ public class VerifyOTP extends AppCompatActivity {
                     intent.putExtra(Keys.USER_DATA,data);
                     startActivity(intent);
                 }else{
-                    //TODO: make the UI design for the inner working for the same.
+                    //TODO: call home page here
                 }
             }
         });

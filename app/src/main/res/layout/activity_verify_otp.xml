@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
@@ -19,7 +20,6 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
-
 
     <TextView
         android:id="@+id/placeText1"
@@ -45,22 +45,20 @@
 
 
     <com.goodiebag.pinview.Pinview
-        android:id="@+id/pinView"
+        android:id="@+id/optView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/numberIndicator"
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
-        app:cursorVisible="false"
-        app:hint="X"
         app:inputType="number"
-        app:password="false"
+        app:forceKeyboard="false"
+        android:focusable="false"
         app:pinBackground="@drawable/pin_selector"
         app:pinHeight="50dp"
         app:pinLength="5"
         app:pinWidth="50dp"
-        app:textSize="@dimen/pin_view_text"
-        tools:ignore="SpUsage" />
+        app:textSize="@dimen/pin_view_text"/>
 
     <TextView
         android:id="@+id/verifyNumber"

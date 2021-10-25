@@ -15,11 +15,11 @@
         <activity
             android:name=".signIn_signUp.VerifyOTP"
             android:exported="true"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            />
         <activity
             android:name=".signIn_signUp.SignIn"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

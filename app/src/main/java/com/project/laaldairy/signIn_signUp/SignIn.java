@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,7 +30,6 @@ public class SignIn extends AppCompatActivity {
     private CountryCodePicker codePicker;
     private EditText userName,userNumber,userEmail;
     private TextView getOTP,codeIndicator,loginLink;
-    private View newUserLayout;
     private LinearLayout nameLayout,emailLayout;
 
 
@@ -43,23 +44,22 @@ public class SignIn extends AppCompatActivity {
 
     //finding all id here...
     private void init(){
-        newUserLayout = findViewById(R.id.new_user_layout);
 
-        nameLayout = newUserLayout.findViewById(R.id.nameParent);
-        emailLayout = newUserLayout.findViewById(R.id.emailParent);
+        nameLayout = findViewById(R.id.nameParent);
+        emailLayout = findViewById(R.id.emailParent);
 
-        codePicker = newUserLayout.findViewById(R.id.codePicker);
-        userName = newUserLayout.findViewById(R.id.userName);
-        userNumber = newUserLayout.findViewById(R.id.userNumber);
-        userEmail = newUserLayout.findViewById(R.id.userEmail);
-        getOTP = newUserLayout.findViewById(R.id.getOTP);
-        codeIndicator = newUserLayout.findViewById(R.id.codeIndicator);
-        loginLink = newUserLayout.findViewById(R.id.loginLink);
+        codePicker = findViewById(R.id.codePicker);
+        userName = findViewById(R.id.userName);
+        userNumber = findViewById(R.id.userNumber);
+        userEmail = findViewById(R.id.userEmail);
+        getOTP = findViewById(R.id.getOTP);
+        codeIndicator = findViewById(R.id.codeIndicator);
+        loginLink = findViewById(R.id.loginLink);
 
         sliderView = findViewById(R.id.imageSlider);
     }
 
-    //setting image cycle adapter here...
+//    setting image cycle adapter here...
     private void initImageSlider(){
         sliderView.setSliderAdapter(new ImageSliderAdapter());
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_RIGHT);
@@ -74,9 +74,10 @@ public class SignIn extends AppCompatActivity {
 
         getOTP.setOnClickListener(clicked->{
             String number = userNumber.getText().toString().trim();
-            if(number.isEmpty() || number.length() < 10){
-                userNumber.setError("Invalid Number");
-            }else{
+            if(nameLayout.getVisibility() == View.VISIBLE && userName.getText().toString().isEmpty()) userName.setError("Invalid Name");
+            else if(emailLayout.getVisibility() == View.VISIBLE && userEmail.getText().toString().isEmpty()) userEmail.setError("Invalid Email");
+            else if(number.isEmpty() || number.length() < 10) userNumber.setError("Invalid Number");
+            else{
                 Intent intent = new Intent(this,VerifyOTP.class);
                 UserData data = new UserData();
                 if(nameLayout.getVisibility() == View.VISIBLE){
@@ -85,8 +86,8 @@ public class SignIn extends AppCompatActivity {
                    intent.putExtra(Keys.NEW_USER,true);
                 }
                 data.setPhone(codeIndicator.getText().toString()+number);
-
                 intent.putExtra(Keys.USER_DATA,data);
+
                 startActivity(intent);
             }
         });
