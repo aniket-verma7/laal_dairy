@@ -10,21 +10,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Custom">
         <activity
-            android:name=".signIn_signUp.WelcomeActivity"
-            android:exported="true" />
-        <activity
-            android:name=".signIn_signUp.VerifyOTP"
-            android:exported="true"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            />
-        <activity
-            android:name=".signIn_signUp.SignIn"
-            android:exported="true">
+            android:name=".home.MainActivity"
+            android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".signIn_signUp.WelcomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".signIn_signUp.VerifyOTP"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".signIn_signUp.SignIn"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
         </activity>
     </application>
 

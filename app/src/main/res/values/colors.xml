@@ -15,5 +15,6 @@
     <color name="input_text_color">#313F51 </color>
     <color name="text_background">#FFF8F9</color>
     <color name="cursor_color">#5F6C7D</color>
+    <color name="tab_Color">#FFBECB</color>
 
 </resources>

@@ -40,7 +40,7 @@ public class VerifyOTP extends AppCompatActivity {
 
         numberIndicator = findViewById(R.id.numberIndicator);
         verifyNumber = findViewById(R.id.verifyNumber);
-//        otp = findViewById(R.id.pinView);
+        otp = findViewById(R.id.optView);
 
         numberIndicator.setText(data.getPhone());
         newUser = getIntent().getBooleanExtra(Keys.NEW_USER,false);

@@ -16,8 +16,8 @@
 
     <style name="Theme.Custom" parent="Theme.MaterialComponents.Light.NoActionBar">
 
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/background_color</item>
+        <item name="colorPrimary">@color/tab_Color</item>
+        <item name="colorPrimaryVariant">@color/text_background</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:navigationBarColor">@color/white</item>
 
@@ -45,6 +45,13 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+    </style>
+
+<!--    Tab Layout size -->
+    <style name="TabLayoutStyle" parent="Base.Widget.Design.TabLayout">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
 </resources>
