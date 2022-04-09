@@ -1,16 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Profile Fragment"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="40dp"
-        android:textStyle="bold"/>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:src="@drawable/edit" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:src="@drawable/dummy_image" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins"
+                android:text="Her Name"
+                android:textColor="@color/text_color"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:drawableLeft="@drawable/call_icon"
+                android:padding="1dp"
+                android:text="    (+91) 12345 - 67890"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/email_icon"
+                android:text="    ui_uxdesigner@mail.com"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="100dp"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="24dp"
+                android:background="@color/text_color" />
+
+            <TextView
+                android:layout_below="@id/divider"
+                android:id="@+id/scheduleTransactions"
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/schedule_transaction"
+                android:layout_marginLeft="24dp"
+                android:fontFamily="@font/poppins"
+                android:text="  Schedule Transaction"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_below="@id/scheduleTransactions"
+                android:id="@+id/divider1"
+                android:layout_marginLeft="24dp"
+                android:layout_width="100dp"
+                android:layout_height="0.5dp"
+                android:background="@color/text_color" />
+
+            <TextView
+                android:layout_below="@id/divider1"
+                android:id="@+id/notification"
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:drawableLeft="@drawable/notification"
+                android:fontFamily="@font/poppins"
+                android:text="  Notification"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_below="@id/notification"
+                android:id="@+id/divider2"
+                android:layout_marginLeft="24dp"
+                android:layout_width="100dp"
+                android:layout_height="0.5dp"
+                android:background="@color/text_color" />
+
+            <TextView
+                android:layout_below="@id/divider2"
+                android:id="@+id/monthlyStatement"
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:drawableLeft="@drawable/month_statement"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:fontFamily="@font/poppins"
+                android:text="  Monthly Statement"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_below="@id/monthlyStatement"
+                android:id="@+id/divider3"
+                android:layout_marginLeft="24dp"
+                android:layout_width="100dp"
+                android:layout_height="0.5dp"
+                android:background="@color/text_color" />
+
+            <TextView
+                android:layout_below="@id/divider3"
+                android:id="@+id/help"
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:drawableLeft="@drawable/help_support"
+                android:fontFamily="@font/poppins"
+                android:text="  Help and Support"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_below="@id/help"
+                android:id="@+id/divider4"
+                android:layout_marginLeft="24dp"
+                android:layout_width="100dp"
+                android:layout_height="0.5dp"
+                android:background="@color/text_color" />
+
+            <TextView
+                android:id="@+id/policy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider4"
+                android:layout_marginVertical="10dp"
+                android:layout_marginLeft="24dp"
+                android:drawableLeft="@drawable/policy"
+                android:fontFamily="@font/poppins"
+                android:text=" Privacy Policy"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
+
+            <View
+                android:layout_below="@id/policy"
+                android:id="@+id/divider5"
+                android:layout_marginLeft="24dp"
+                android:layout_width="100dp"
+                android:layout_height="0.5dp"
+                android:background="@color/text_color" />
+
+            <TextView
+                android:layout_below="@id/divider5"
+                android:id="@+id/refer"
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:drawableLeft="@drawable/refer"
+                android:fontFamily="@font/poppins"
+                android:text=" Refer and Earn"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_below="@id/refer"
+                android:id="@+id/divider6"
+                android:layout_marginLeft="24dp"
+                android:layout_width="100dp"
+                android:layout_height="0.5dp"
+                android:background="@color/text_color" />
+
+            <TextView
+                android:layout_below="@id/divider6"
+                android:id="@+id/settings"
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/settings"
+                android:layout_marginLeft="24dp"
+                android:fontFamily="@font/poppins"
+                android:text="  Settings"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_below="@id/settings"
+                android:id="@+id/divider7"
+                android:layout_marginLeft="24dp"
+                android:layout_width="100dp"
+                android:layout_height="0.5dp"
+                android:background="@color/text_color" />
+
+            <TextView
+                android:layout_below="@id/divider7"
+                android:id="@+id/logout"
+                android:layout_marginVertical="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:fontFamily="@font/poppins"
+                android:text="Logout"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"
+                android:textStyle="normal" />
+
+            <ImageView
+                android:id="@+id/profile_page_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+               android:layout_alignParentBottom="true"
+                android:src="@drawable/profile_page_image"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -7,15 +7,15 @@
     android:orientation="vertical">
 
 
-    <ImageView
-        android:id="@+id/imagePlace"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/text_background"
-        android:src="@drawable/chart" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imagePlace"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:layout_marginHorizontal="10dp"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:background="@color/text_background"-->
+<!--        android:src="@drawable/chart" />-->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -70,6 +70,24 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:background="@color/text_background"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addTransaction"
+            android:layout_width="wrap_content"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/add_transaction"
+            app:rippleColor="@color/tab_Color"
+            app:borderWidth="0dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="70dp"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+
+
 
 </LinearLayout>
