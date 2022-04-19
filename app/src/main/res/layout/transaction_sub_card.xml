@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    >
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/transaction_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22dp"
+            android:textAlignment="textStart"
+            android:paddingLeft="40dp"
+            android:text="Title"/>
+
+        <TextView
+            android:id="@+id/transaction_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:textAlignment="textStart"
+            android:paddingLeft="40dp"
+            android:text="Category"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/transaction_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textAlignment="textEnd"
+            android:paddingEnd="40dp"
+            android:text="Price"/>
+
+        <TextView
+            android:id="@+id/transaction_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:textAlignment="textEnd"
+            android:paddingEnd="40dp"
+            android:text="Time"/>
+
+    </LinearLayout>
+
+</LinearLayout>

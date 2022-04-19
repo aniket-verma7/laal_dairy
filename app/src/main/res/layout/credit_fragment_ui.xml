@@ -5,12 +5,9 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvCreditTransaction"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="40dp"
-        android:text="Credit Transaction"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

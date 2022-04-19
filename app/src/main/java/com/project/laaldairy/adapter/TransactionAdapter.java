@@ -1,0 +1,82 @@
+package com.project.laaldairy.adapter;
+
+import android.transition.Fade;
+import android.transition.Transition;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.project.laaldairy.R;
+import com.project.laaldairy.dto.Transaction;
+
+import java.util.ArrayList;
+
+public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.Holder> {
+
+    private ArrayList<Transaction> transactions;
+
+    /**
+     * TODO : change later
+     */
+    public TransactionAdapter() {
+        this.transactions = new ArrayList<>();
+    }
+
+    @NonNull
+    @Override
+    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.transaction_card, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull Holder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 10;//TODO : change later
+    }
+
+    class Holder extends RecyclerView.ViewHolder {
+        TextView transactionDate;
+        ImageView transactionShow;
+        RecyclerView rcvSubTransactions;
+        LinearLayout transactionLayout;
+        SubTransactionAdapter adapter;
+        boolean clicked;
+
+        public Holder(@NonNull View itemView) {
+            super(itemView);
+            transactionDate = itemView.findViewById(R.id.transaction_date);
+            transactionShow = itemView.findViewById(R.id.transaction_show);
+            rcvSubTransactions = itemView.findViewById(R.id.transactions);
+            rcvSubTransactions.setLayoutManager(new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.VERTICAL,false));
+            adapter = new SubTransactionAdapter();
+            rcvSubTransactions.setAdapter(adapter);
+            transactionLayout = itemView.findViewById(R.id.transaction_layout);
+            clicked = false;
+
+            //TODO : add animation in the expand and collapse
+            transactionShow.setOnClickListener(event -> {
+                if (!clicked) {
+                    clicked = true;
+                    transactionShow.setImageResource(R.drawable.collapse);
+                    transactionLayout.setVisibility(View.VISIBLE);
+                } else {
+                    clicked = false;
+                    transactionShow.setImageResource(R.drawable.expand);
+                    transactionLayout.animate().translationY(0);
+                    transactionLayout.setVisibility(View.GONE);
+                }
+            });
+        }
+    }
+}
