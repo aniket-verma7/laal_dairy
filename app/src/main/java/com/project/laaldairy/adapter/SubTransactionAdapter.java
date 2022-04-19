@@ -9,8 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.laaldairy.R;
+import com.project.laaldairy.entity.Transaction;
+
+import java.util.List;
 
 public class SubTransactionAdapter extends RecyclerView.Adapter<SubTransactionAdapter.Holder> {
+
+    private List<Transaction> transactions;
+
+    public SubTransactionAdapter(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 
     @NonNull
     @Override
@@ -25,7 +34,7 @@ public class SubTransactionAdapter extends RecyclerView.Adapter<SubTransactionAd
 
     @Override
     public int getItemCount() {
-        return 10;//TODO : change later
+        return transactions.size();
     }
 
     class Holder extends RecyclerView.ViewHolder

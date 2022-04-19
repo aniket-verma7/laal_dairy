@@ -1,7 +1,5 @@
 package com.project.laaldairy.adapter;
 
-import android.transition.Fade;
-import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,23 +8,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.laaldairy.R;
-import com.project.laaldairy.dto.Transaction;
+import com.project.laaldairy.entity.Transaction;
+import com.project.laaldairy.util.DateFormatter;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.Holder> {
 
-    private ArrayList<Transaction> transactions;
+    private Map<String, List<Transaction>> transactionMap;
+    private List<String> dates;
 
-    /**
-     * TODO : change later
-     */
-    public TransactionAdapter() {
-        this.transactions = new ArrayList<>();
+    public TransactionAdapter(Map<String, List<Transaction>> transactionMap) {
+        this.transactionMap = transactionMap;
+        dates = new ArrayList<String>(this.transactionMap.keySet());
     }
 
     @NonNull
@@ -37,12 +37,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-
+        try {
+            holder.transactionDate.setText(DateFormatter.getFormattedDate(dates.get(position)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 10;//TODO : change later
+        return transactionMap.size();
     }
 
     class Holder extends RecyclerView.ViewHolder {
@@ -57,26 +61,26 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             super(itemView);
             transactionDate = itemView.findViewById(R.id.transaction_date);
             transactionShow = itemView.findViewById(R.id.transaction_show);
-            rcvSubTransactions = itemView.findViewById(R.id.transactions);
-            rcvSubTransactions.setLayoutManager(new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.VERTICAL,false));
-            adapter = new SubTransactionAdapter();
-            rcvSubTransactions.setAdapter(adapter);
-            transactionLayout = itemView.findViewById(R.id.transaction_layout);
-            clicked = false;
-
-            //TODO : add animation in the expand and collapse
-            transactionShow.setOnClickListener(event -> {
-                if (!clicked) {
-                    clicked = true;
-                    transactionShow.setImageResource(R.drawable.collapse);
-                    transactionLayout.setVisibility(View.VISIBLE);
-                } else {
-                    clicked = false;
-                    transactionShow.setImageResource(R.drawable.expand);
-                    transactionLayout.animate().translationY(0);
-                    transactionLayout.setVisibility(View.GONE);
-                }
-            });
+//            rcvSubTransactions = itemView.findViewById(R.id.transactions);
+//            rcvSubTransactions.setLayoutManager(new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.VERTICAL,false));
+//            adapter = new SubTransactionAdapter(transactionMap.get(get));
+//            rcvSubTransactions.setAdapter(adapter);
+//            transactionLayout = itemView.findViewById(R.id.transaction_layout);
+//            clicked = false;
+//
+//            //TODO : add animation in the expand and collapse
+//            transactionShow.setOnClickListener(event -> {
+//                if (!clicked) {
+//                    clicked = true;
+//                    transactionShow.setImageResource(R.drawable.collapse);
+//                    transactionLayout.setVisibility(View.VISIBLE);
+//                } else {
+//                    clicked = false;
+//                    transactionShow.setImageResource(R.drawable.expand);
+//                    transactionLayout.animate().translationY(0);
+//                    transactionLayout.setVisibility(View.GONE);
+//                }
+//            });
         }
     }
 }
