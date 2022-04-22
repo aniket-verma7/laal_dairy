@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.project.laaldairy.R;
 import com.project.laaldairy.dao.TransactionDao;
 import com.project.laaldairy.database.TransactionDatabase;
+import com.project.laaldairy.dialogs.TransactionEntryDialog;
 import com.project.laaldairy.entity.Transaction;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         transactionMap = new HashMap<>();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         tabLayout = view.findViewById(R.id.statusTab);
         tabLayout.addOnTabSelectedListener(mListener);
 
-        supportManager.beginTransaction().replace(R.id.transactionStatus, new CreditFragment(allTransaction)).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+        supportManager.beginTransaction().replace(R.id.transactionStatus, new CreditFragment(transactionMap.get(0))).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
         addTransaction = view.findViewById(R.id.addTransaction);
         addTransaction.setColorFilter(Color.RED);
         addTransaction.setOnClickListener(this);
@@ -86,19 +88,18 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         public void onTabReselected(TabLayout.Tab tab) {}
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
-//        TransactionDao dao = TransactionDatabase.getInstance(getContext()).getTransactionDao();
-//        dao.insert(new Transaction("Dummy title 1","Dummy Category 1",new Date().toString(),100));
-//        dao.insert(new Transaction("Dummy title 2","Dummy Category 2",new Date().toString(),-100.99));
-//        dao.insert(new Transaction("Dummy title 3","Dummy Category 3",new Date().toString(),50));
+        TransactionEntryDialog.show(getActivity(),this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void getAllTransaction()
     {
+        //TODO : use LiveData or Observable pattern
+
         allTransaction = TransactionDatabase.getInstance(getContext()).getTransactionDao().getAllTransaction();
         Predicate<Transaction> creditTransaction = transaction -> transaction.getAmount()>=0;
         Predicate<Transaction> debitTransaction = transaction -> transaction.getAmount()<0;
@@ -106,5 +107,14 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         transactionMap.put(0,allTransaction.stream().filter(creditTransaction).collect(Collectors.toList()));
         transactionMap.put(1,allTransaction.stream().filter(debitTransaction).collect(Collectors.toList()));
         transactionMap.put(2,allTransaction);
+    }
+
+    /**
+     * save transaction entity object to ROOM.
+     * @param transaction : Transaction entity object.
+     */
+    public void saveTransaction(Transaction transaction) {
+        TransactionDatabase.getInstance(getContext()).getTransactionDao().insert(transaction);
+        Toast.makeText(getActivity(), "Transaction Saved", Toast.LENGTH_SHORT).show();
     }
 }

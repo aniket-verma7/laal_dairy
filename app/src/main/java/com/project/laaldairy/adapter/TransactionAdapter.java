@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.laaldairy.R;
@@ -37,6 +38,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
+        holder.setAdapter(position);
         try {
             holder.transactionDate.setText(DateFormatter.getFormattedDate(dates.get(position)));
         } catch (ParseException e) {
@@ -61,26 +63,31 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             super(itemView);
             transactionDate = itemView.findViewById(R.id.transaction_date);
             transactionShow = itemView.findViewById(R.id.transaction_show);
-//            rcvSubTransactions = itemView.findViewById(R.id.transactions);
-//            rcvSubTransactions.setLayoutManager(new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.VERTICAL,false));
-//            adapter = new SubTransactionAdapter(transactionMap.get(get));
-//            rcvSubTransactions.setAdapter(adapter);
-//            transactionLayout = itemView.findViewById(R.id.transaction_layout);
-//            clicked = false;
+            rcvSubTransactions = itemView.findViewById(R.id.transactions);
+            rcvSubTransactions.setLayoutManager(new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.VERTICAL,false));
+            transactionLayout = itemView.findViewById(R.id.transaction_layout);
+            clicked = false;
 //
 //            //TODO : add animation in the expand and collapse
-//            transactionShow.setOnClickListener(event -> {
-//                if (!clicked) {
-//                    clicked = true;
-//                    transactionShow.setImageResource(R.drawable.collapse);
-//                    transactionLayout.setVisibility(View.VISIBLE);
-//                } else {
-//                    clicked = false;
-//                    transactionShow.setImageResource(R.drawable.expand);
-//                    transactionLayout.animate().translationY(0);
-//                    transactionLayout.setVisibility(View.GONE);
-//                }
-//            });
+            transactionShow.setOnClickListener(event -> {
+                if (!clicked) {
+                    clicked = true;
+                    transactionShow.setImageResource(R.drawable.collapse);
+                    transactionLayout.setVisibility(View.VISIBLE);
+                } else {
+                    clicked = false;
+                    transactionShow.setImageResource(R.drawable.expand);
+                    transactionLayout.setVisibility(View.GONE);
+                }
+            });
+        }
+
+        public void setAdapter(int position)
+        {
+            if(adapter == null){
+                adapter = new SubTransactionAdapter(transactionMap.get(dates.get(position)));
+                rcvSubTransactions.setAdapter(adapter);
+            }
         }
     }
 }

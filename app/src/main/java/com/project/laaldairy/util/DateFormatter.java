@@ -1,25 +1,42 @@
 package com.project.laaldairy.util;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DateFormatter {
 
     //1-based indexing
-    private static String[] monthNameArray = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-    private static String[] dayNameArray = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    private static final String[] monthNameArray = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+    private static final String[] dayNameArray = {"","Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static String getFormattedDate(String stringDate) throws ParseException {
-        Date date = new Date(stringDate);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        int day = Integer.parseInt(stringDate.substring(0,2));
+        int month = Integer.parseInt(stringDate.substring(3,5));
+        int year = Integer.parseInt(stringDate.substring(6,10));
 
-        return dayNameArray[calendar.get(Calendar.DAY_OF_WEEK)-1]+", "+simpleDateFormat.format(date).substring(0,2)+" "+monthNameArray[calendar.get(Calendar.MONTH)];
+        LocalDate localDate = LocalDate.of(year,month,day);
+        return dayNameArray[localDate.getDayOfWeek().getValue()]+", "+ day+" "+ monthNameArray[month-1];
+    }
+
+    public static String getFormattedTime(String stringDate)
+    {
+        stringDate = stringDate.substring(stringDate.indexOf(" "));
+        return stringDate.substring(stringDate.indexOf(" ")+1,stringDate.lastIndexOf(":"));
+
+    }
+
+    public static String[] getDays()
+    {
+        return dayNameArray;
     }
 
 }

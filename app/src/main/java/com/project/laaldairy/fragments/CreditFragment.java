@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,11 +42,17 @@ public class CreditFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.credit_fragment_ui,container,false);
+        TextView textView = v.findViewById(R.id.noTransaction);
         rcvTransaction = v.findViewById(R.id.rcvCreditTransaction);
-        transactionByDateMap = GroupTransactions.getTransactionByGroup(creditTransactionList);
-        adapter = new TransactionAdapter(transactionByDateMap);
-        rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        rcvTransaction.setAdapter(adapter);
+
+        if(creditTransactionList.size() != 0) {
+            rcvTransaction.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.GONE);
+            transactionByDateMap = GroupTransactions.getTransactionByGroup(creditTransactionList);
+            adapter = new TransactionAdapter(transactionByDateMap);
+            rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+            rcvTransaction.setAdapter(adapter);
+        }
         return v;
     }
 

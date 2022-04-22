@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,10 +41,17 @@ public class DebitFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.debit_fragment_ui,container,false);
         rcvTransaction = v.findViewById(R.id.rcvDebitTransaction);
-        transactionByDateMap = GroupTransactions.getTransactionByGroup(debitTransactionList);
-        adapter = new TransactionAdapter(transactionByDateMap);
-        rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        rcvTransaction.setAdapter(adapter);
+        TextView textView = v.findViewById(R.id.noTransaction);
+
+        if(debitTransactionList.size() != 0) {
+            rcvTransaction.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.GONE);
+            transactionByDateMap = GroupTransactions.getTransactionByGroup(debitTransactionList);
+            adapter = new TransactionAdapter(transactionByDateMap);
+            rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            rcvTransaction.setAdapter(adapter);
+        }
+
         return v;
     }
 }
