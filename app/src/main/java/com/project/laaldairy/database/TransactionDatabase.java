@@ -21,7 +21,7 @@ public abstract class TransactionDatabase extends RoomDatabase {
         {
             synchronized (TransactionDatabase.class)
             {
-                instance = Room.databaseBuilder(context,TransactionDatabase.class,"transaction_databse").allowMainThreadQueries().build();
+                instance = Room.databaseBuilder(context,TransactionDatabase.class,"transaction_database").allowMainThreadQueries().build();
             }
         }
         return instance;

@@ -27,13 +27,6 @@ public class DateFormatter {
         return dayNameArray[localDate.getDayOfWeek().getValue()]+", "+ day+" "+ monthNameArray[month-1];
     }
 
-    public static String getFormattedTime(String stringDate)
-    {
-        stringDate = stringDate.substring(stringDate.indexOf(" "));
-        return stringDate.substring(stringDate.indexOf(" ")+1,stringDate.lastIndexOf(":"));
-
-    }
-
     public static String[] getDays()
     {
         return dayNameArray;

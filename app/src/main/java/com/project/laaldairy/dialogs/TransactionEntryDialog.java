@@ -28,22 +28,21 @@ import java.util.List;
 
 public class TransactionEntryDialog {
 
-    private static Dialog dialog;
-    private static String[] data = {"Default", "Rent"};
+    private Dialog dialog;
+    private String[] data = {"Default", "Rent"};
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static void show(Activity activity, TimeLineFragment timeLineFragment) {
+    public void show(Activity activity, TimeLineFragment timeLineFragment) {
 
         final StringBuilder[] stringDateAndTime = {new StringBuilder(), new StringBuilder()};
 
-        if (dialog == null) {
-            dialog = new Dialog(activity);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.transaction_entry_dialog);
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.transaction_entry_dialog);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
 
         Calendar calendar = Calendar.getInstance();
 
@@ -71,13 +70,13 @@ public class TransactionEntryDialog {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 stringDateAndTime[1].setLength(0);
-                stringDateAndTime[1].append((hourOfDay < 10 ? "0" + hourOfDay : hourOfDay) + ":" + minute);
+                stringDateAndTime[1].append((hourOfDay < 10 ? "0" + hourOfDay : hourOfDay) + ":" + (minute < 10 ? "0" + minute : minute));
                 time.setText(stringDateAndTime[1].toString());
             }
         }, hour, minute, true);
 
         stringDateAndTime[0].append((day < 10 ? "0" + day : day) + "/" + ((month < 10) ? "0" + month : month) + "/" + year);
-        stringDateAndTime[1].append((hour < 10 ? "0" + hour : hour) + ":" + minute);
+        stringDateAndTime[1].append((hour < 10 ? "0" + hour : hour) + ":" + (minute < 10 ? "0" + minute : minute));
 
 
         date.setText(stringDateAndTime[0]);
@@ -114,7 +113,8 @@ public class TransactionEntryDialog {
 
             transaction.setTitle(title.getText().toString());
             transaction.setCategory(categoryPicker.getSelectedItem().toString());
-            transaction.setDate(stringDateAndTime[0] + " " + stringDateAndTime[1] + ":00");
+            transaction.setDate(stringDateAndTime[0].toString());
+            transaction.setTime(stringDateAndTime[1].append(":00").toString());
 
             double amountInDouble = Double.parseDouble(amount.getText().toString());
             if (!credit[0]) amountInDouble = (-1) * amountInDouble;

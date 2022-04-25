@@ -1,5 +1,6 @@
 package com.project.laaldairy.adapter;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +38,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.transaction_card, parent, false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.setAdapter(position);

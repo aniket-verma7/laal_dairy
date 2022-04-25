@@ -35,6 +35,10 @@ public class AllFragment extends Fragment {
         this.allTransactionList = allTransactionList;
     }
 
+    public void setAllTransactionList(List<Transaction> allTransactionList) {
+        this.allTransactionList = allTransactionList;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
@@ -47,6 +51,7 @@ public class AllFragment extends Fragment {
             rcvTransaction.setVisibility(View.VISIBLE);
             textView.setVisibility(View.GONE);
             transactionByDateMap = GroupTransactions.getTransactionByGroup(allTransactionList);
+            System.out.println(transactionByDateMap.toString());
             adapter = new TransactionAdapter(transactionByDateMap);
             rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             rcvTransaction.setAdapter(adapter);
