@@ -42,7 +42,7 @@ public class SubTransactionAdapter extends RecyclerView.Adapter<SubTransactionAd
         amount = (amount<0)?amount*(-1):amount;
         formattedAmount.append(String.format("%.2f", amount));
         holder.price.setText(formattedAmount.toString());
-        holder.time.setText(DateFormatter.getFormattedTime(transactions.get(position).getDate()));
+        holder.time.setText(transactions.get(position).getTime());
     }
 
     @Override

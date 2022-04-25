@@ -35,6 +35,10 @@ public class DebitFragment extends Fragment {
         this.debitTransactionList = debitTransactionList;
     }
 
+    public void setDebitTransactionList(List<Transaction> debitTransactionList) {
+        this.debitTransactionList = debitTransactionList;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override

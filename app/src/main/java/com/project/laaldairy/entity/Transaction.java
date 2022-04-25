@@ -27,6 +27,9 @@ public class Transaction {
     @ColumnInfo(name = "date")
     private String date;
 
+    @ColumnInfo(name = "time")
+    private String time;
+
     @ColumnInfo(name = "amount")
     private double amount;
 
@@ -61,6 +64,14 @@ public class Transaction {
         return category;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     public void setCategory(String category) {
         this.category = category;
     }
@@ -79,5 +90,17 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", amount=" + amount +
+                "}\n";
     }
 }

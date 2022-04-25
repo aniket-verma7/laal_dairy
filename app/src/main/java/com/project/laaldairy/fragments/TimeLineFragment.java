@@ -15,6 +15,8 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -23,6 +25,7 @@ import com.project.laaldairy.dao.TransactionDao;
 import com.project.laaldairy.database.TransactionDatabase;
 import com.project.laaldairy.dialogs.TransactionEntryDialog;
 import com.project.laaldairy.entity.Transaction;
+import com.project.laaldairy.view_model.TransactionViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,11 +42,21 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
     private FragmentManager supportManager;
     private FloatingActionButton addTransaction;
     private List<Transaction> allTransaction;
+    private TransactionViewModel transactionViewModel;
     private Map<Integer,List<Transaction>> transactionMap;
+    private final Predicate<Transaction> creditTransaction = transaction -> transaction.getAmount() >= 0;
+    private final Predicate<Transaction> debitTransaction = transaction -> transaction.getAmount() < 0;
+    private CreditFragment creditFragment;
+    private DebitFragment debitFragment;
+    private AllFragment allFragment;
 
     public TimeLineFragment(FragmentManager getSupportFragmentManager) {
         this.supportManager = getSupportFragmentManager;
         transactionMap = new HashMap<>();
+        allTransaction = new ArrayList<>();
+        creditFragment = new CreditFragment(allTransaction);
+        debitFragment = new DebitFragment(allTransaction);
+        allFragment = new AllFragment(allTransaction);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -51,11 +64,17 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.timeline_fragment, container, false);
-        getAllTransaction();
+
+        transactionViewModel = ViewModelProviders.of(this).get(TransactionViewModel.class);
+        transactionMap = new HashMap<>();
+        applyObserver();
+
+
         tabLayout = view.findViewById(R.id.statusTab);
         tabLayout.addOnTabSelectedListener(mListener);
 
-        supportManager.beginTransaction().replace(R.id.transactionStatus, new CreditFragment(transactionMap.get(0))).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+        creditFragment.setCreditTransactionList(transactionMap.get(0));
+        supportManager.beginTransaction().replace(R.id.transactionStatus,creditFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
         addTransaction = view.findViewById(R.id.addTransaction);
         addTransaction.setColorFilter(Color.RED);
         addTransaction.setOnClickListener(this);
@@ -63,20 +82,47 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    //TODO : change the filtering logic;apply filtering in ViewModel class
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void applyObserver() {
+        transactionViewModel.getTransaction().observe(getViewLifecycleOwner(), new Observer<List<Transaction>>() {
+            @Override
+            public void onChanged(List<Transaction> transactions) {
+                allTransaction = transactions;
+                System.out.println(allTransaction.toString());
+                filterTransactionList();
+            }
+        });
+        allTransaction = transactionViewModel.getTransaction().getValue();
+        filterTransactionList();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void filterTransactionList()
+    {
+        transactionMap.put(0, allTransaction.stream().filter(creditTransaction).collect(Collectors.toList()));
+        transactionMap.put(1, allTransaction.stream().filter(debitTransaction).collect(Collectors.toList()));
+        transactionMap.put(2, allTransaction);
+    }
+
     private TabLayout.OnTabSelectedListener mListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             switch (tab.getPosition()) {
                 case 0:
-                    supportManager.beginTransaction().replace(R.id.transactionStatus, new CreditFragment(transactionMap.get(0))).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                    creditFragment.setCreditTransactionList(transactionMap.get(0));
+                    supportManager.beginTransaction().replace(R.id.transactionStatus,creditFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                     break;
 
                 case 1:
-                    supportManager.beginTransaction().replace(R.id.transactionStatus, new DebitFragment(transactionMap.get(1))).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                    debitFragment.setDebitTransactionList(transactionMap.get(1));
+                    System.out.println(transactionMap.get(1).toString());
+                    supportManager.beginTransaction().replace(R.id.transactionStatus, debitFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                     break;
 
                 case 2:
-                    supportManager.beginTransaction().replace(R.id.transactionStatus, new AllFragment(transactionMap.get(2))).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+                    allFragment.setAllTransactionList(transactionMap.get(2));
+                    supportManager.beginTransaction().replace(R.id.transactionStatus,allFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                     break;
             }
         }
@@ -92,29 +138,17 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        TransactionEntryDialog.show(getActivity(),this);
+        TransactionEntryDialog dialog = new TransactionEntryDialog();
+        dialog.show(getActivity(),this);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void getAllTransaction()
-    {
-        //TODO : use LiveData or Observable pattern
-
-        allTransaction = TransactionDatabase.getInstance(getContext()).getTransactionDao().getAllTransaction();
-        Predicate<Transaction> creditTransaction = transaction -> transaction.getAmount()>=0;
-        Predicate<Transaction> debitTransaction = transaction -> transaction.getAmount()<0;
-
-        transactionMap.put(0,allTransaction.stream().filter(creditTransaction).collect(Collectors.toList()));
-        transactionMap.put(1,allTransaction.stream().filter(debitTransaction).collect(Collectors.toList()));
-        transactionMap.put(2,allTransaction);
-    }
 
     /**
      * save transaction entity object to ROOM.
      * @param transaction : Transaction entity object.
      */
     public void saveTransaction(Transaction transaction) {
-        TransactionDatabase.getInstance(getContext()).getTransactionDao().insert(transaction);
+        transactionViewModel.addTransaction(transaction);
         Toast.makeText(getActivity(), "Transaction Saved", Toast.LENGTH_SHORT).show();
     }
 }
