@@ -19,6 +19,8 @@ import com.project.laaldairy.adapter.TransactionAdapter;
 import com.project.laaldairy.entity.Transaction;
 import com.project.laaldairy.util.GroupTransactions;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,35 +33,44 @@ public class CreditFragment extends Fragment {
     private TransactionAdapter adapter;
     private List<Transaction> creditTransactionList;
     private Map<String,List<Transaction>> transactionByDateMap;
+    private TextView textView;
 
-    public CreditFragment(List<Transaction> creditTransactionList) {
-        this.creditTransactionList = creditTransactionList;
+    public CreditFragment() {
         transactionByDateMap = new HashMap<>();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setCreditTransactionList(List<Transaction> creditTransactionList) {
         this.creditTransactionList = creditTransactionList;
+        if(adapter == null)
+            setupAdapter();
+        adapter.updateAdapter();
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.credit_fragment_ui,container,false);
-        TextView textView = v.findViewById(R.id.noTransaction);
+        textView = v.findViewById(R.id.noTransaction);
         rcvTransaction = v.findViewById(R.id.rcvCreditTransaction);
 
         if(creditTransactionList.size() != 0) {
-            rcvTransaction.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.GONE);
-            transactionByDateMap = GroupTransactions.getTransactionByGroup(creditTransactionList);
-            adapter = new TransactionAdapter(transactionByDateMap);
-            rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-            rcvTransaction.setAdapter(adapter);
+            setupAdapter();
         }
         return v;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setupAdapter()
+    {
+        rcvTransaction.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.GONE);
+        transactionByDateMap = GroupTransactions.getTransactionByGroup(creditTransactionList);
+        adapter = new TransactionAdapter(transactionByDateMap);
+        rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        rcvTransaction.setAdapter(adapter);
+    }
 
 }

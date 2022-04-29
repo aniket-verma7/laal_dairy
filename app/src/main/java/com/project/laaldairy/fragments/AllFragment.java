@@ -21,6 +21,7 @@ import com.project.laaldairy.adapter.TransactionAdapter;
 import com.project.laaldairy.entity.Transaction;
 import com.project.laaldairy.util.GroupTransactions;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +32,8 @@ public class AllFragment extends Fragment {
     private Map<String,List<Transaction>> transactionByDateMap;
     private List<Transaction> allTransactionList;
 
-    public AllFragment(List<Transaction> allTransactionList) {
-        this.allTransactionList = allTransactionList;
+    public AllFragment() {
+        transactionByDateMap = new HashMap<>();
     }
 
     public void setAllTransactionList(List<Transaction> allTransactionList) {

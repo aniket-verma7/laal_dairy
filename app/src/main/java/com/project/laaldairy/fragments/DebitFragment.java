@@ -21,6 +21,7 @@ import com.project.laaldairy.entity.Transaction;
 import com.project.laaldairy.home.MainActivity;
 import com.project.laaldairy.util.GroupTransactions;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +32,8 @@ public class DebitFragment extends Fragment {
     private Map<String,List<Transaction>> transactionByDateMap;
     private List<Transaction> debitTransactionList;
 
-    public DebitFragment(List<Transaction> debitTransactionList) {
-        this.debitTransactionList = debitTransactionList;
+    public DebitFragment() {
+        transactionByDateMap = new HashMap<>();
     }
 
     public void setDebitTransactionList(List<Transaction> debitTransactionList) {

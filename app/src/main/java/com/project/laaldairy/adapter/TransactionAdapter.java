@@ -54,6 +54,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return transactionMap.size();
     }
 
+    public void updateAdapter() {
+    }
+
     class Holder extends RecyclerView.ViewHolder {
         TextView transactionDate;
         ImageView transactionShow;
