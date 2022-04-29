@@ -12,21 +12,17 @@ import com.project.laaldairy.entity.Transaction;
 
 import java.util.List;
 
-public class TransactionViewModel extends AndroidViewModel
-{
+public class TransactionViewModel extends AndroidViewModel {
     private MutableLiveData<List<Transaction>> transactions;
     private TransactionDao dao;
 
-    public TransactionViewModel(@NonNull Application application)
-    {
+    public TransactionViewModel(@NonNull Application application) {
         super(application);
         dao = TransactionDatabase.getInstance(application).getTransactionDao();
     }
 
-    public MutableLiveData<List<Transaction>> getTransaction()
-    {
-        if(transactions == null)
-        {
+    public MutableLiveData<List<Transaction>> getTransaction() {
+        if (transactions == null) {
             transactions = new MutableLiveData<>();
             loadTransactions();
         }
@@ -37,19 +33,16 @@ public class TransactionViewModel extends AndroidViewModel
         transactions.setValue(dao.getAllTransaction());
     }
 
-    public void addTransaction(Transaction transaction)
-    {
+    public void addTransaction(Transaction transaction) {
         dao.insert(transaction);
         loadTransactions();
     }
 
-    public void removeTransaction(Transaction transaction)
-    {
+    public void removeTransaction(Transaction transaction) {
         dao.delete(transaction);
     }
 
-    public void updateTransaction(Transaction transaction)
-    {
+    public void updateTransaction(Transaction transaction) {
         dao.update(transaction);
     }
 }

@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class CreditFragment extends Fragment {
@@ -35,16 +37,20 @@ public class CreditFragment extends Fragment {
     private Map<String,List<Transaction>> transactionByDateMap;
     private TextView textView;
 
-    public CreditFragment() {
+    public CreditFragment(List<Transaction> creditTransactions) {
         transactionByDateMap = new HashMap<>();
+        this.creditTransactionList = creditTransactions;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setCreditTransactionList(List<Transaction> creditTransactionList) {
-        this.creditTransactionList = creditTransactionList;
-        if(adapter == null)
-            setupAdapter();
-        adapter.updateAdapter();
+
+        if(adapter != null){
+            this.creditTransactionList = creditTransactionList;
+            transactionByDateMap = GroupTransactions.getTransactionByGroup(creditTransactionList);
+            adapter.updateAdapter(transactionByDateMap);
+        }
+
     }
 
 
@@ -68,6 +74,7 @@ public class CreditFragment extends Fragment {
         rcvTransaction.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
         transactionByDateMap = GroupTransactions.getTransactionByGroup(creditTransactionList);
+        System.out.println(transactionByDateMap);
         adapter = new TransactionAdapter(transactionByDateMap);
         rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         rcvTransaction.setAdapter(adapter);

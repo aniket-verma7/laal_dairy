@@ -29,6 +29,7 @@ import com.project.laaldairy.view_model.TransactionViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,6 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         this.supportManager = getSupportFragmentManager;
         transactionMap = new HashMap<>();
         allTransaction = new ArrayList<>();
-        mFragment = new CreditFragment();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -69,7 +69,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         tabLayout = view.findViewById(R.id.statusTab);
         tabLayout.addOnTabSelectedListener(mListener);
 
-        ((CreditFragment) mFragment).setCreditTransactionList(transactionMap.get(0));
+        mFragment = new CreditFragment(transactionMap.get(0));
         supportManager.beginTransaction().replace(R.id.transactionStatus, mFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
         addTransaction = view.findViewById(R.id.addTransaction);
         addTransaction.setColorFilter(Color.RED);
@@ -91,20 +91,32 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         allTransaction = transactionViewModel.getTransaction().getValue();
         filterTransactionList();
     }
+//
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void filterTransactionList() {
-        transactionMap.put(0, allTransaction.stream().filter(creditTransaction).collect(Collectors.toList()));
-        transactionMap.put(1, allTransaction.stream().filter(debitTransaction).collect(Collectors.toList()));
+        List<Transaction> credits = allTransaction.stream().filter(creditTransaction).collect(Collectors.toList());
+        List<Transaction> debits = allTransaction.stream().filter(debitTransaction).collect(Collectors.toList());
+
+        credits = credits.stream().sorted(Comparator.comparing(Transaction::getDate).reversed()).collect(Collectors.toList());
+        debits = debits.stream().sorted(Comparator.comparing(Transaction::getDate).reversed()).collect(Collectors.toList());
+        allTransaction = allTransaction.stream().sorted(Comparator.comparing(Transaction::getDate).reversed()).collect(Collectors.toList());
+
+        transactionMap.put(0, credits);
+        transactionMap.put(1, debits);
         transactionMap.put(2, allTransaction);
 
-        if (mFragment.getClass() == CreditFragment.class) {
-            ((CreditFragment)mFragment).setCreditTransactionList(transactionMap.get(0));
-        } else if (mFragment.getClass() == DebitFragment.class) {
-            ((DebitFragment)mFragment).setDebitTransactionList(transactionMap.get(1));
-        } else if (mFragment.getClass() == AllFragment.class) {
-            ((AllFragment)mFragment).setAllTransactionList(transactionMap.get(2));
+        if (mFragment != null) {
+            if (mFragment.getClass() == CreditFragment.class) {
+                ((CreditFragment) mFragment).setCreditTransactionList(transactionMap.get(0));
+            } else if (mFragment.getClass() == DebitFragment.class) {
+                ((DebitFragment) mFragment).setDebitTransactionList(transactionMap.get(1));
+            } else if (mFragment.getClass() == AllFragment.class) {
+                ((AllFragment) mFragment).setAllTransactionList(transactionMap.get(2));
+            }
         }
+
     }
 
     private TabLayout.OnTabSelectedListener mListener = new TabLayout.OnTabSelectedListener() {
@@ -113,8 +125,8 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         public void onTabSelected(TabLayout.Tab tab) {
             switch (tab.getPosition()) {
                 case 0:
-                    mFragment = new CreditFragment();
-                    ((CreditFragment) mFragment).setCreditTransactionList(transactionMap.get(0));
+                    mFragment = new CreditFragment((transactionMap.get(0)));
+//                    ((CreditFragment) mFragment).setCreditTransactionList);
                     supportManager.beginTransaction().replace(R.id.transactionStatus, mFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                     break;
 

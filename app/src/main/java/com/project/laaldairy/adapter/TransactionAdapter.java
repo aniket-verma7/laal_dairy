@@ -19,8 +19,11 @@ import com.project.laaldairy.util.DateFormatter;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.Holder> {
 
@@ -54,7 +57,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return transactionMap.size();
     }
 
-    public void updateAdapter() {
+    public void updateAdapter(Map<String, List<Transaction>> transactionMap) {
+        this.transactionMap = transactionMap;
+        dates = new ArrayList<String>(this.transactionMap.keySet());
+        notifyDataSetChanged();
     }
 
     class Holder extends RecyclerView.ViewHolder {

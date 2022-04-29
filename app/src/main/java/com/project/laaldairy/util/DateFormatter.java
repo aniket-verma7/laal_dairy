@@ -24,7 +24,7 @@ public class DateFormatter {
         int year = Integer.parseInt(stringDate.substring(6,10));
 
         LocalDate localDate = LocalDate.of(year,month,day);
-        return dayNameArray[localDate.getDayOfWeek().getValue()]+", "+ day+" "+ monthNameArray[month-1];
+        return dayNameArray[localDate.getDayOfWeek().getValue()]+", "+ day+" "+ monthNameArray[month-1]+" "+year;
     }
 
     public static String[] getDays()
