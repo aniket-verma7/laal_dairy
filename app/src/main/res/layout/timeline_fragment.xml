@@ -82,8 +82,8 @@
             app:rippleColor="@color/tab_Color"
             app:borderWidth="0dp"
             android:layout_gravity="end|bottom"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="70dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="12dp"
             android:layout_height="wrap_content"/>
 
     </FrameLayout>

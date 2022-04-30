@@ -55,7 +55,7 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         allTransaction = new ArrayList<>();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,11 +88,10 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
                 filterTransactionList();
             }
         });
-        allTransaction = transactionViewModel.getTransaction().getValue();
+        if(allTransaction.size() == 0)
+            allTransaction = transactionViewModel.getTransaction().getValue();
         filterTransactionList();
     }
-//
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void filterTransactionList() {
@@ -125,21 +124,17 @@ public class TimeLineFragment extends Fragment implements View.OnClickListener {
         public void onTabSelected(TabLayout.Tab tab) {
             switch (tab.getPosition()) {
                 case 0:
-                    mFragment = new CreditFragment((transactionMap.get(0)));
-//                    ((CreditFragment) mFragment).setCreditTransactionList);
+                    mFragment = new CreditFragment(transactionMap.get(0));
                     supportManager.beginTransaction().replace(R.id.transactionStatus, mFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                     break;
 
                 case 1:
-                    mFragment = new DebitFragment();
-                    ((DebitFragment) mFragment).setDebitTransactionList(transactionMap.get(1));
-                    System.out.println(transactionMap.get(1).toString());
+                    mFragment = new DebitFragment(transactionMap.get(1));
                     supportManager.beginTransaction().replace(R.id.transactionStatus, mFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                     break;
 
                 case 2:
-                    mFragment = new AllFragment();
-                    ((AllFragment) mFragment).setAllTransactionList(transactionMap.get(2));
+                    mFragment = new AllFragment(transactionMap.get(2));
                     supportManager.beginTransaction().replace(R.id.transactionStatus, mFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                     break;
             }

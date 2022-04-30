@@ -29,10 +29,10 @@ import java.util.List;
 public class TransactionEntryDialog {
 
     private Dialog dialog;
-    private String[] data = {"Default", "Rent"};
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.N)
+
     public void show(Activity activity, TimeLineFragment timeLineFragment) {
 
         final StringBuilder[] stringDateAndTime = {new StringBuilder(), new StringBuilder()};
@@ -64,7 +64,9 @@ public class TransactionEntryDialog {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(activity, null, year, month, day);
+        System.out.println(year+" "+month+" "+day);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(activity, null, year, month-1, day);
         TimePickerDialog timePickerDialog = new TimePickerDialog(activity, new TimePickerDialog.OnTimeSetListener() {
 
             @Override
@@ -84,9 +86,11 @@ public class TransactionEntryDialog {
 
 
         datePickerDialog.setOnDateSetListener((view, selectedYear, selectedMonth, selectedDay) -> {
+            selectedMonth+=1;
             stringDateAndTime[0].setLength(0);
             stringDateAndTime[0].append((selectedDay < 10 ? "0" + selectedDay : selectedDay) + "/" + ((selectedMonth < 10) ? "0" + selectedMonth : selectedMonth) + "/" + selectedYear);
             date.setText(stringDateAndTime[0].toString());
+            dayPicker.setSelection(DateFormatter.getDay(stringDateAndTime[0].toString()));
         });
 
 
@@ -114,7 +118,7 @@ public class TransactionEntryDialog {
             transaction.setTitle(title.getText().toString());
             transaction.setCategory(categoryPicker.getSelectedItem().toString());
             transaction.setDate(stringDateAndTime[0].toString());
-            transaction.setTime(stringDateAndTime[1].append(":00").toString());
+            transaction.setTime(stringDateAndTime[1].toString());
 
             double amountInDouble = Double.parseDouble(amount.getText().toString());
             if (!credit[0]) amountInDouble = (-1) * amountInDouble;

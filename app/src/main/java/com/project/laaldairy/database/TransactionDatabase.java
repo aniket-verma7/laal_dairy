@@ -17,11 +17,9 @@ public abstract class TransactionDatabase extends RoomDatabase {
 
     public static TransactionDatabase getInstance(Context context)
     {
-        if(instance == null)
-        {
-            synchronized (TransactionDatabase.class)
-            {
-                instance = Room.databaseBuilder(context,TransactionDatabase.class,"transaction_database").allowMainThreadQueries().build();
+        if(instance == null) {
+            synchronized (TransactionDatabase.class) {
+                instance = Room.databaseBuilder(context, TransactionDatabase.class, "transaction_database").allowMainThreadQueries().build();
             }
         }
         return instance;

@@ -32,7 +32,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public TransactionAdapter(Map<String, List<Transaction>> transactionMap) {
         this.transactionMap = transactionMap;
-        dates = new ArrayList<String>(this.transactionMap.keySet());
+        dates = new ArrayList<>(this.transactionMap.keySet());
     }
 
     @NonNull
@@ -59,7 +59,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public void updateAdapter(Map<String, List<Transaction>> transactionMap) {
         this.transactionMap = transactionMap;
-        dates = new ArrayList<String>(this.transactionMap.keySet());
+        dates = new ArrayList<>(this.transactionMap.keySet());
+        System.out.println(transactionMap.get(dates.get(0)));
         notifyDataSetChanged();
     }
 

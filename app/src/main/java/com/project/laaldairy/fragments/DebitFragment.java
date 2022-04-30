@@ -34,12 +34,19 @@ public class DebitFragment extends Fragment {
     private Map<String,List<Transaction>> transactionByDateMap;
     private List<Transaction> debitTransactionList;
 
-    public DebitFragment() {
+    public DebitFragment(List<Transaction> transactions) {
         transactionByDateMap = new HashMap<>();
+        debitTransactionList = transactions;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void setDebitTransactionList(List<Transaction> debitTransactionList) {
-        this.debitTransactionList = debitTransactionList;
+
+        if(adapter != null){
+            this.debitTransactionList = debitTransactionList;
+            transactionByDateMap = GroupTransactions.getTransactionByGroup(debitTransactionList);
+            adapter.updateAdapter(transactionByDateMap);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

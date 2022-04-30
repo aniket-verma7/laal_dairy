@@ -34,12 +34,19 @@ public class AllFragment extends Fragment {
     private Map<String,List<Transaction>> transactionByDateMap;
     private List<Transaction> allTransactionList;
 
-    public AllFragment() {
+    public AllFragment(List<Transaction> transactions) {
         transactionByDateMap = new HashMap<>();
+        allTransactionList = transactions;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void setAllTransactionList(List<Transaction> allTransactionList) {
-        this.allTransactionList = allTransactionList;
+
+        if(adapter != null){
+            this.allTransactionList = allTransactionList;
+            transactionByDateMap = GroupTransactions.getTransactionByGroup(allTransactionList);
+            adapter.updateAdapter(transactionByDateMap);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
