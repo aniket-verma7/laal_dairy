@@ -7,17 +7,20 @@ import androidx.annotation.RequiresApi;
 import com.project.laaldairy.entity.Transaction;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class GroupTransactions {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static Map<String, List<Transaction>> getTransactionByGroup(List<Transaction> transactions)
-    {
-        return transactions.stream().collect((Collectors.groupingBy(Transaction::getDate)));
+    public static Map<String, List<Transaction>> getTransactionByGroup(List<Transaction> transactions) {
+        return transactions.stream()
+                .sorted(Comparator.comparing(Transaction::getDate))
+                .collect((Collectors.groupingBy(Transaction::getDate)));
     }
 }

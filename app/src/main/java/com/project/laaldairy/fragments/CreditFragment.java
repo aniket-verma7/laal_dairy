@@ -74,7 +74,6 @@ public class CreditFragment extends Fragment {
         rcvTransaction.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
         transactionByDateMap = GroupTransactions.getTransactionByGroup(creditTransactionList);
-        System.out.println(transactionByDateMap);
         adapter = new TransactionAdapter(transactionByDateMap);
         rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         rcvTransaction.setAdapter(adapter);

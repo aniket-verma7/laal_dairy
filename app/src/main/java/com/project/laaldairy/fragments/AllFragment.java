@@ -61,7 +61,6 @@ public class AllFragment extends Fragment {
             rcvTransaction.setVisibility(View.VISIBLE);
             textView.setVisibility(View.GONE);
             transactionByDateMap = GroupTransactions.getTransactionByGroup(allTransactionList);
-            System.out.println(transactionByDateMap.toString());
             adapter = new TransactionAdapter(transactionByDateMap);
             rcvTransaction.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
             rcvTransaction.setAdapter(adapter);
